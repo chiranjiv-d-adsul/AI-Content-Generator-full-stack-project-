@@ -1,4 +1,3 @@
-// Schema definitions
 import { boolean, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const AIOutput = pgTable('ai_output', {
@@ -12,7 +11,7 @@ export const AIOutput = pgTable('ai_output', {
 
 export const UserSubscription = pgTable('userSubscription', {
   id: serial('id').primaryKey(),
-  email: varchar('email'),
+  email: varchar('email').notNull(),
   userName: varchar('userName'),
   active: boolean('active'),
   paymentId: varchar('paymentId'),

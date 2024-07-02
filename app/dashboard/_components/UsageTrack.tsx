@@ -95,7 +95,7 @@ const UsageTrack: React.FC = () => {
         setMaxWords(1000000);
       } else {
         setUserSubscription(false);
-        setMaxWords(10000); // Or set to a default value if user is not subscribed
+        setMaxWords(0); // Or set to a default value if user is not subscribed
       }
     } catch (err) {
       console.error('Database query error:', err);
@@ -117,6 +117,7 @@ const UsageTrack: React.FC = () => {
     }
     console.log(total);
   };
+
 
 
   if (loading) {
