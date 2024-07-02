@@ -61,15 +61,16 @@ const UsageTrack: React.FC = () => {
   }, [updateCreditUsage, user]);
 
   const GetData = async () => {
+    const email = user?.primaryEmailAddress?.emailAddress || '';
     if (!user?.primaryEmailAddress?.emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress?.emailAddress || '')); // Ensure createdBy is accessed correctly
+      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, email));
       GetTotalUsage(result);
     } catch (err) {
-      throw new Error(err.message);
+      throw new Error();
     }
   };
 
@@ -86,24 +87,28 @@ const UsageTrack: React.FC = () => {
         setMaxWords(1000000);
       }
     } catch (err) {
-      throw new Error(err.message);
+      throw new Error();
     }
   };
 
-  const GetTotalUsage = (result: { aiResponse?: string }[]) => {
+  const GetTotalUsage = (result: { aiResponse?: string | null }[]) => {
     let total: number = 0;
     result.forEach((element) => {
-      total += Number(element.aiResponse?.length || 0);
+      // Check if aiResponse exists and is not null before adding its length
+      if (element.aiResponse && typeof element.aiResponse === 'string') {
+        total += element.aiResponse.length;
+      }
     });
     setTotalUsage(total);
     if (total > maxWords) {
       setShowAlert(true);
-      // setShowModal(true); // Show the modal when the limit is exceeded
+      setShowModal(true); // Show the modal when the limit is exceeded
     } else {
       setShowAlert(false);
     }
     console.log(total);
   };
+
 
   const handleCloseModal = () => {
     setShowModal(false);
