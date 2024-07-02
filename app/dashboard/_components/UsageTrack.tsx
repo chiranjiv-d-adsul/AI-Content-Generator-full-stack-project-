@@ -1,3 +1,4 @@
+// Component code
 "use client";
 import { Button } from '@/components/ui/button';
 import React, { useContext, useEffect, useState } from 'react';
@@ -23,7 +24,6 @@ const Modal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   );
 };
 
-
 const UsageTrack: React.FC = () => {
   const { user } = useUser();
   const [totalUsage, setTotalUsage] = useState<number>(0);
@@ -33,7 +33,7 @@ const UsageTrack: React.FC = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [maxWords, setMaxWords] = useState(10000);
-  const {updatCreditUsage,setUpdateCreditUsage}=useContext(UpdateCreditUsageContext);
+  const { updatCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,35 +56,43 @@ const UsageTrack: React.FC = () => {
     fetchData();
   }, [user]);
 
-  useEffect(()=>{
-     user&&
-     GetData();
-  },[updatCreditUsage&&user]);
+  useEffect(() => {
+    if (user) {
+      GetData();
+    }
+  }, [updatCreditUsage, user]);
 
   const GetData = async () => {
+    if (!user?.primaryEmailAddress?.emailAddress) {
+      throw new Error('User email address is not available');
+    }
 
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress));
+      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
       GetTotalUsage(result);
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err.message);
     }
   };
 
   const IsUserSubscribe = async () => {
+    if (!user?.primaryEmailAddress?.emailAddress) {
+      throw new Error('User email address is not available');
+    }
+
     try {
       const result = await db.select().from(UserSubscription)
-        .where(eq(UserSubscription.email, user?.primaryEmailAddress?.emailAddress));
+        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
       }
     } catch (err) {
-      throw new Error(err);
+      throw new Error(err.message);
     }
   };
 
-  const GetTotalUsage = (result: { aiResponse?: string }[]) => {
+  const GetTotalUsage = (result: { aiResponse?: string | null }[]) => {
     let total: number = 0;
     result.forEach((element) => {
       total += Number(element.aiResponse?.length || 0);
@@ -127,7 +135,7 @@ const UsageTrack: React.FC = () => {
         {showAlert && <div className='text-red-500'>You have exceeded your credit limit! Please upgrade your plan.</div>}
       </div>
       <Button className='bg-[#c4c1c1] hover:bg-primary text-black hover:text-white rounded-md p-2 mt-2 w-full'>
-       <a href="/dashboard/billing">Upgrade Plan</a>
+        <a href="/dashboard/billing">Upgrade Plan</a>
       </Button>
       {showModal && <Modal onClose={handleCloseModal} />}
     </div>
