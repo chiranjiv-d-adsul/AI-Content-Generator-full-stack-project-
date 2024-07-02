@@ -62,34 +62,44 @@ const UsageTrack: React.FC = () => {
   }, [updatCreditUsage, user]);
 
   const GetData = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) {
-      throw new Error('User email address is not available');
-    }
-
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
-      GetTotalUsage(result);
+      const email = user?.primaryEmailAddress?.emailAddress;
+      if (email) {
+        const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, email));
+        GetTotalUsage(result);
+      } else {
+        console.error("User's email address is undefined");
+        throw new Error("User's email address is undefined");
+      }
     } catch (err) {
       console.error('Database query error:', err);
-      throw new Error();
+      throw new Error('Database query error');
     }
-  };
+
+  }
+
+
 
   const IsUserSubscribe = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) {
+    const email = user?.primaryEmailAddress?.emailAddress;
+    if (!email) {
+      console.error('User email address is not available');
       throw new Error('User email address is not available');
     }
 
     try {
       const result = await db.select().from(UserSubscription)
-        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
+        .where(eq(UserSubscription.email, email));
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
+      } else {
+        setUserSubscription(false);
+        setMaxWords(10000); // Or set to a default value if user is not subscribed
       }
     } catch (err) {
       console.error('Database query error:', err);
-      throw new Error();
+      throw new Error('Database query error');
     }
   };
 
@@ -101,16 +111,13 @@ const UsageTrack: React.FC = () => {
     setTotalUsage(total);
     if (total > maxWords) {
       setShowAlert(true);
-      // setShowModal(true); // Show the modal when the limit is exceeded
+      // setShowModal(true); // Uncomment if modal should be shown when limit is exceeded
     } else {
       setShowAlert(false);
     }
     console.log(total);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -118,6 +125,10 @@ const UsageTrack: React.FC = () => {
 
   if (error) {
     return <div>{error}</div>;
+  }
+
+  function handleCloseModal(): void {
+    throw new Error('Function not implemented.');
   }
 
   return (

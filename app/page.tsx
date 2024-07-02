@@ -1,9 +1,9 @@
-"use client"
-
 // pages/index.js
+'use client'
 import { useRouter } from 'next/navigation';
+import withAuthRedirect from '../components/withAuthRedirect';
 
-export default function Home() {
+function Home() {
   const router = useRouter();
 
   const handleGetStarted = () => {
@@ -23,3 +23,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuthRedirect(Home);
