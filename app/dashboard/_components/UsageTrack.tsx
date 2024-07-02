@@ -1,12 +1,11 @@
-"use client";
-import { Button } from '@/components/ui/button';
-import React, { useContext, useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { db } from '@/utils/db';
 import { eq } from 'drizzle-orm';
 import { AIOutput, UserSubscription } from '@/utils/schema';
 import { UserSubscriptionContext } from '@/app/(context)/UserSubscriptionContext';
 import { UpdateCreditUsageContext } from '@/app/(context)/UpdateCreditUsageContext';
+import { Button } from '@/components/ui/button';
+import React, { useContext, useEffect, useState } from 'react';
 
 const Modal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
@@ -62,7 +61,6 @@ const UsageTrack: React.FC = () => {
   }, [updatCreditUsage, user]);
 
   const GetData = async () => {
-    {/* @ts-ignore */}
     try {
       const email = user?.primaryEmailAddress?.emailAddress;
       if (email) {
@@ -76,10 +74,7 @@ const UsageTrack: React.FC = () => {
       console.error('Database query error:', err);
       throw new Error('Database query error');
     }
-
   }
-
-
 
   const IsUserSubscribe = async () => {
     const email = user?.primaryEmailAddress?.emailAddress;
@@ -96,7 +91,7 @@ const UsageTrack: React.FC = () => {
         setMaxWords(1000000);
       } else {
         setUserSubscription(false);
-        setMaxWords(0); // Or set to a default value if user is not subscribed
+        setMaxWords(10000); // Or set to a default value if user is not subscribed
       }
     } catch (err) {
       console.error('Database query error:', err);
@@ -119,18 +114,12 @@ const UsageTrack: React.FC = () => {
     console.log(total);
   };
 
-
-
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
     return <div>{error}</div>;
-  }
-
-  function handleCloseModal(): void {
-    throw new Error('Function not implemented.');
   }
 
   return (
@@ -151,7 +140,7 @@ const UsageTrack: React.FC = () => {
       <Button className='bg-[#c4c1c1] hover:bg-primary text-black hover:text-white rounded-md p-2 mt-2 w-full'>
         <a href="/dashboard/billing">Upgrade Plan</a>
       </Button>
-      {showModal && <Modal onClose={handleCloseModal} />}
+      {showModal && <Modal onClose={() => setShowModal(false)} />}
     </div>
   );
 };
