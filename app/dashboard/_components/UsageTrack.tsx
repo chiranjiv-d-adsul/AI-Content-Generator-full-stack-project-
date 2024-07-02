@@ -1,9 +1,8 @@
-"use client";
 import { Button } from '@/components/ui/button';
 import React, { useContext, useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { db } from '@/utils/db';
-import { eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm'; // Make sure eq is correctly imported
 import { AIOutput, UserSubscription } from '@/utils/schema';
 import { UserSubscriptionContext } from '@/app/(context)/UserSubscriptionContext';
 import { UpdateCreditUsageContext } from '@/app/(context)/UpdateCreditUsageContext';
@@ -31,8 +30,8 @@ const UsageTrack: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [maxWords, setMaxWords] = useState(10000);
-  const { updatCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
+  const [maxWords, setMaxWords] = useState<number>(10000); // Corrected type for maxWords
+  const { updateCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +41,7 @@ const UsageTrack: React.FC = () => {
 
         try {
           await GetData();
-          await IsUserSubscribe();
+          await IsUserSubscribed(); // Corrected function name
         } catch (err) {
           console.error('Error fetching data:', err);
           setError('Failed to fetch usage data.');
@@ -59,45 +58,39 @@ const UsageTrack: React.FC = () => {
     if (user) {
       GetData();
     }
-  }, [updatCreditUsage, user]);
+  }, [updateCreditUsage, user]);
 
   const GetData = async () => {
-    const emailAddress = user?.primaryEmailAddress?.emailAddress;
-
-    if (!emailAddress) {
+    if (!user?.primaryEmailAddress?.emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, emailAddress));
+      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress?.emailAddress || '')); // Ensure createdBy is accessed correctly
       GetTotalUsage(result);
     } catch (err) {
-      console.error('Database query error:', err);
-      throw new Error();
+      throw new Error(err.message);
     }
   };
 
-  const IsUserSubscribe = async () => {
-    const emailAddress = user?.primaryEmailAddress?.emailAddress;
-
-    if (!emailAddress) {
+  const IsUserSubscribed = async () => {
+    if (!user?.primaryEmailAddress?.emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
       const result = await db.select().from(UserSubscription)
-        .where(eq(UserSubscription.email, emailAddress));
+        .where(eq(UserSubscription.email, user.primaryEmailAddress?.emailAddress || '')); // Ensure email is accessed correctly
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
       }
     } catch (err) {
-      console.error('Database query error:', err);
-      throw new Error();
+      throw new Error(err.message);
     }
   };
 
-  const GetTotalUsage = (result: { aiResponse?: string | null }[]) => {
+  const GetTotalUsage = (result: { aiResponse?: string }[]) => {
     let total: number = 0;
     result.forEach((element) => {
       total += Number(element.aiResponse?.length || 0);
