@@ -62,6 +62,7 @@ const UsageTrack: React.FC = () => {
   }, [updatCreditUsage, user]);
 
   const GetData = async () => {
+    {/* @ts-ignore */}
     try {
       const email = user?.primaryEmailAddress?.emailAddress;
       if (email) {
