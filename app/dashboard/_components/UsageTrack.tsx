@@ -80,8 +80,9 @@ const UsageTrack: React.FC = () => {
     }
 
     try {
-      const result = await db.select().from(UserSubscription)
-        .where(eq(UserSubscription.email, user.primaryEmailAddress?.emailAddress || '')); // Ensure email is accessed correctly
+      const result = await db.select().from(AIOutput).where(
+        eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress ?? '')
+      ); // Ensure email is accessed correctly
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
