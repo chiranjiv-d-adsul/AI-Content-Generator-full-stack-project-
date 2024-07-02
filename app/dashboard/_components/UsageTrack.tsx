@@ -1,4 +1,3 @@
-// Component code
 "use client";
 import { Button } from '@/components/ui/button';
 import React, { useContext, useEffect, useState } from 'react';
@@ -63,32 +62,38 @@ const UsageTrack: React.FC = () => {
   }, [updatCreditUsage, user]);
 
   const GetData = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) {
+    const emailAddress = user?.primaryEmailAddress?.emailAddress;
+
+    if (!emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
+      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, emailAddress));
       GetTotalUsage(result);
     } catch (err) {
-      throw new Error(err.message);
+      console.error('Database query error:', err);
+      throw new Error();
     }
   };
 
   const IsUserSubscribe = async () => {
-    if (!user?.primaryEmailAddress?.emailAddress) {
+    const emailAddress = user?.primaryEmailAddress?.emailAddress;
+
+    if (!emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
       const result = await db.select().from(UserSubscription)
-        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
+        .where(eq(UserSubscription.email, emailAddress));
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
       }
     } catch (err) {
-      throw new Error(err.message);
+      console.error('Database query error:', err);
+      throw new Error();
     }
   };
 
