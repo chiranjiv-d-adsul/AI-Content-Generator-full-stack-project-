@@ -1,8 +1,9 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import React, { useContext, useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { db } from '@/utils/db';
-import { eq } from 'drizzle-orm'; // Make sure eq is correctly imported
+import { eq } from 'drizzle-orm';
 import { AIOutput, UserSubscription } from '@/utils/schema';
 import { UserSubscriptionContext } from '@/app/(context)/UserSubscriptionContext';
 import { UpdateCreditUsageContext } from '@/app/(context)/UpdateCreditUsageContext';
@@ -30,8 +31,8 @@ const UsageTrack: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [maxWords, setMaxWords] = useState<number>(10000); // Corrected type for maxWords
-  const { updateCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
+  const [maxWords, setMaxWords] = useState(10000);
+  const { updatCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +42,7 @@ const UsageTrack: React.FC = () => {
 
         try {
           await GetData();
-          await IsUserSubscribed(); // Corrected function name
+          await IsUserSubscribe();
         } catch (err) {
           console.error('Error fetching data:', err);
           setError('Failed to fetch usage data.');
@@ -58,36 +59,36 @@ const UsageTrack: React.FC = () => {
     if (user) {
       GetData();
     }
-  }, [updateCreditUsage, user]);
+  }, [updatCreditUsage, user]);
 
   const GetData = async () => {
-    const email = user?.primaryEmailAddress?.emailAddress || '';
     if (!user?.primaryEmailAddress?.emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
-      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, email));
+      const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user.primaryEmailAddress.emailAddress));
       GetTotalUsage(result);
     } catch (err) {
+      console.error('Database query error:', err);
       throw new Error();
     }
   };
 
-  const IsUserSubscribed = async () => {
+  const IsUserSubscribe = async () => {
     if (!user?.primaryEmailAddress?.emailAddress) {
       throw new Error('User email address is not available');
     }
 
     try {
-      const result = await db.select().from(AIOutput).where(
-        eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress ?? '')
-      ); // Ensure email is accessed correctly
+      const result = await db.select().from(UserSubscription)
+        .where(eq(UserSubscription.email, user.primaryEmailAddress.emailAddress));
       if (result.length > 0) {
         setUserSubscription(true);
         setMaxWords(1000000);
       }
     } catch (err) {
+      console.error('Database query error:', err);
       throw new Error();
     }
   };
@@ -95,21 +96,17 @@ const UsageTrack: React.FC = () => {
   const GetTotalUsage = (result: { aiResponse?: string | null }[]) => {
     let total: number = 0;
     result.forEach((element) => {
-      // Check if aiResponse exists and is not null before adding its length
-      if (element.aiResponse && typeof element.aiResponse === 'string') {
-        total += element.aiResponse.length;
-      }
+      total += Number(element.aiResponse?.length || 0);
     });
     setTotalUsage(total);
     if (total > maxWords) {
       setShowAlert(true);
-      setShowModal(true); // Show the modal when the limit is exceeded
+      // setShowModal(true); // Show the modal when the limit is exceeded
     } else {
       setShowAlert(false);
     }
     console.log(total);
   };
-
 
   const handleCloseModal = () => {
     setShowModal(false);
