@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Content Generator
+
+This project is an AI-powered content generator built using React Next.js 14, integrating various technologies for modern web development.
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Configuration](#configuration)
+5. [Project Structure](#project-structure)
+6. [Usage](#usage)
+   - [Authentication](#authentication)
+   - [Database](#database)
+   - [AI Integration](#ai-integration)
+7. [Deployment](#deployment)
+8. [Contributing](#contributing)
+9. [License](#license)
+
+## Introduction
+
+This project is an AI Content Generator built with React Next.js 14, designed to generate and manage content efficiently using AI capabilities.
+
+## Features
+
+- **Modern UI**: Utilizes Tailwind CSS for responsive and sleek UI components.
+- **Authentication**: Implements social and email/password authentication with Clerk.
+- **Database**: Uses Drizzle ORM with PostgreSQL for efficient database management.
+- **AI Integration**: Integrates Google Gemini API for AI-driven content generation.
+- **Templates**: Provides customizable templates for generating AI-driven content.
+- **Deployment**: Easily deployable on Cloud platforms like Vercel.
+
+## Technologies Used
+
+- React Next.js 14
+- Tailwind CSS
+- TypeScript
+- Clerk for authentication
+- Drizzle ORM with PostgreSQL
+- Google Gemini API
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running follow these simple steps.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Prerequisites
+
+- Node.js
+- npm or yarn
+- PostgreSQL
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/chiranjiv-d-adsul/AI-Content-Generator-full-stack-project-.git
+   cd ai-content-generator
+   
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+Configuration
+Set up environment variables:
+
+   ```bash
+      cp .env.example .env.local
+   ```
+ Edit .env.local and add necessary configuration
+3. **Project Structure**
+
+The project structure follows a standard Next.js application structure:
+
+```
+/ 
+├── components/         # React components
+├── pages/              # Next.js pages
+├── public/             # Static assets
+├── styles/             # Global styles
+├── api/                # API routes
+├── lib/                # Utility functions
+└── README.md           # Project README
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To start the development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+   npm run dev
+```
+Open http://localhost:3000 to view it in your browser.
 
-## Learn More
+4.Authentication
+This project uses Clerk for authentication. Ensure you have configured Clerk properly in your environment variables.
 
-To learn more about Next.js, take a look at the following resources:
+5.Database
+Drizzle ORM is used to interact with a PostgreSQL database. Set up your PostgreSQL database and configure the connection in .env.local.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6.AI Integration
+Google Gemini API is used for AI-driven content generation. Obtain API credentials and configure them in .env.local.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+7.Deployment
+Deploy your application on Vercel or any cloud platform of your choice. Ensure environment variables are properly configured for production.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+8.Contributing
+Contributions are welcome! Please fork the repository and submit a pull request.
