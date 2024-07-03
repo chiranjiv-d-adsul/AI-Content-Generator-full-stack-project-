@@ -140,6 +140,7 @@ const ContactForm = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
+
         theme="light"
         className="custom-toast-container"
       />

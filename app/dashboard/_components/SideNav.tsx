@@ -33,8 +33,9 @@ function SideNav() {
 
   return (
     <div className="h-screen relative p-5 shadow-sm border-2 bg-white">
-      <div className="flex justify-start">
-        <Image src={'/logo.svg'} alt="logo" width={120} height={100} />
+      <div className="flex justify-left items-center gap-4">
+        <Image src={'/logo.svg'} alt="logo" width={40} height={40} />
+        <h1 className='text-lg text-[#7e7eea]'>DashBoard</h1>
       </div>
       <hr className="my-3.5 border" />
       <div className="mt-3">
