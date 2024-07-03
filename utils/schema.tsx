@@ -2,12 +2,13 @@ import { boolean, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const AIOutput = pgTable('ai_output', {
   id: serial('id').primaryKey(),
-  formData: varchar('formData').notNull(),
-  aiResponse: text('aiResponse'),
-  templateSlug: varchar('templateSlug').notNull(),
-  createdBy: varchar('createdBy').notNull(),
-  createdAt: varchar('createdAt')
+  formData: text('form_data').notNull(),
+  templateSlug: varchar('template_slug').notNull(),
+  aiResponse: text('ai_response').notNull(),
+  createdBy: varchar('created_by').notNull(),
+  createdAt: varchar('created_at').notNull(),
 });
+
 
 export const UserSubscription = pgTable('userSubscription', {
   id: serial('id').primaryKey(),

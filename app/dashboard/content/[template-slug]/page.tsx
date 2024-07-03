@@ -36,34 +36,58 @@ function CreateNewContent(props: PROPS) {
    * @returns
    */
 
-  const GenerateAIContent=async (formData:any)=>{
+  const GenerateAIContent = async (formData: any) => {
     setLoading(true);
 
-    const SelectedPrompt=selectedTemplate?.aiPrompt;
-    const FinalAIPrompt=JSON.stringify(formData)+" "+SelectedPrompt;
+    if (!selectedTemplate) {
+      console.error('Selected template is undefined');
+      setLoading(false);
+      return;
+    }
 
-    const result= await chatSession.sendMessage(FinalAIPrompt);
+    const SelectedPrompt = selectedTemplate.aiPrompt;
+    const FinalAIPrompt = JSON.stringify(formData) + " " + SelectedPrompt;
 
-    console.log(result.response.text());
-    setAiOutput(result?.response.text());
-    await SaveInDb(JSON.stringify(formData),selectedTemplate?.slug,result?.response.text())
-    setLoading(false);
-    setUpdateCreditUsage(Date.now())
+    try {
+      const result = await chatSession.sendMessage(FinalAIPrompt);
 
-  }
+      const responseText = await result.response.text();
+      console.log(responseText);
 
-  const SaveInDb=async(formData:any,slug:any,aiResp:string)=>{
-    const result= await db.insert(AIOutput).values({
-      formData:formData,
-      templateSlug:slug,
-      aiResponse:aiResp,
-      createdBy:user?.primaryEmailAddress?.emailAddress,
-      createdAt:moment().format('DD/MM/YYYY')
+      setAiOutput(responseText);
+
+      await SaveInDb(JSON.stringify(formData), selectedTemplate.slug, responseText);
+
+      setLoading(false);
+      setUpdateCreditUsage(Date.now());
+    } catch (error) {
+      console.error('Error generating AI content:', error);
+      setLoading(false);
+    }
+  };
 
 
-    });
-    console.log(result);
-  }
+  const SaveInDb = async (formData: any, slug: string, aiResp: string) => {
+    if (!user || !user.primaryEmailAddress || !user.primaryEmailAddress.emailAddress) {
+      throw new Error('User email address is not available');
+    }
+    const email = user.primaryEmailAddress.emailAddress;
+
+    try {
+      const result = await db.insert(AIOutput).values({
+        formData: JSON.stringify(formData), // Ensure formData is a string if it's an object
+        templateSlug: slug,
+        aiResponse: aiResp,
+        createdBy: email,
+        createdAt: moment().format('YYYY-MM-DD'), // Use ISO format for date
+      });
+      console.log(result);
+    } catch (error) {
+      console.error('Error saving in DB:', error);
+    }
+  };
+
+
   return (
     <div className="p-5">
       <Link className="text-primary" href="/dashboard">
