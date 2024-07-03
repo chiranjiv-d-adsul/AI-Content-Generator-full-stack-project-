@@ -3,20 +3,20 @@ import { UserSubscriptionContext } from '@/app/(context)/UserSubscriptionContext
 import { db } from '@/utils/db';
 import { UserSubscription } from '@/utils/schema';
 import { useUser } from '@clerk/nextjs';
-import axio from 'axios';
+import axios from 'axios';
 import { Loader2Icon } from 'lucide-react';
 import moment from 'moment';
 import { useContext, useState } from 'react';
 
 const Billing = () => {
   const [loading, setLoading] = useState(false);
-  const {user}=useUser();
-  const {userSubscription,setUserSubscription}=useContext(UserSubscriptionContext)
+  const { user } = useUser();
+  const { userSubscription, setUserSubscription } = useContext(UserSubscriptionContext);
 
   const CreateSubscription = async () => {
     setLoading(true);
     try {
-      const resp = await axio.post('/api/create-subscription', {});
+      const resp = await axios.post('/api/create-subscription', {});
 
       console.log(resp.data);
       OnPayment(resp.data.id);
@@ -33,8 +33,8 @@ const Billing = () => {
       description: 'Monthly Subscription',
       handler: async (resp: any) => {
         console.log(resp);
-        if(resp){
-          SaveSubscription(resp.razorpay_payment_id)
+        if (resp) {
+          SaveSubscription(resp.razorpay_payment_id);
         }
         setLoading(false);
       }
@@ -45,20 +45,30 @@ const Billing = () => {
     rzp.open();
   };
 
-  const SaveSubscription=async(paymentId:string)=>{
-    const result=await db.insert(UserSubscription).values({
-      email:user?.primaryEmailAddress?.emailAddress,
-      userName:user?.fullName,
-      active:true,
-      paymentId:paymentId,
-      joinDate:moment().format('DD/MM/YYYY')
-    });
-    console.log(result);
-    if(result){
-      window.location.reload();
-    }
+  const SaveSubscription = async (paymentId: string) => {
+    try {
+      if (!user || !user.primaryEmailAddress || !user.primaryEmailAddress.emailAddress) {
+        throw new Error('User email address is not available');
+      }
+      const email = user.primaryEmailAddress.emailAddress;
+      const userName = user.fullName || 'Unknown'; // Provide a default value for userName if it's not defined
 
-  }
+      const result = await db.insert(UserSubscription).values({
+        email: email,
+        userName: userName,
+        active: true,
+        paymentId: paymentId,
+        joinDate: moment().format('DD/MM/YYYY')
+      });
+      console.log(result);
+      if (result) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error saving subscription:', error);
+    }
+  };
+
 
   return (
     <>
@@ -83,7 +93,7 @@ const Billing = () => {
             </li>
           </ul>
           <button className="grid place-items-center min-w-[150px] py-3 border-2 border-blue-500 rounded-md bg-transparent text-black hover:bg-blue-500 hover:text-white transition">
-            {!userSubscription?'Active Plan':''}
+            {!userSubscription ? 'Active Plan' : ''}
           </button>
         </article>
         <article className="flex flex-col items-center p-12 bg-white rounded-md text-lg">
@@ -114,7 +124,7 @@ const Billing = () => {
             className="grid place-items-center min-w-[150px] py-3 border-2 border-blue-500 rounded-md bg-blue-500 text-white transition"
           >
             {loading && <Loader2Icon className="animate-spin" />}
-          {userSubscription?'Active Plan':'Get Started'}
+            {userSubscription ? 'Active Plan' : 'Get Started'}
           </button>
         </article>
       </div>

@@ -31,7 +31,7 @@ const UsageTrack: React.FC = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [maxWords, setMaxWords] = useState(10000);
-  const { updatCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
+  const { updateCreditUsage } = useContext(UpdateCreditUsageContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,8 +40,8 @@ const UsageTrack: React.FC = () => {
         setError(null); // Clear previous errors
 
         try {
-          await GetData();
-          await IsUserSubscribe();
+          await getData();
+          await isUserSubscribed();
         } catch (err) {
           console.error('Error fetching data:', err);
           setError('Failed to fetch usage data.');
@@ -56,27 +56,11 @@ const UsageTrack: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      GetData();
+      getData();
     }
-  }, [updatCreditUsage, user]);
+  }, [updateCreditUsage, user]);
 
-  const GetData = async () => {
-    try {
-      const email = user?.primaryEmailAddress?.emailAddress;
-      if (email) {
-        const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, email));
-        GetTotalUsage(result);
-      } else {
-        console.error("User's email address is undefined");
-        throw new Error("User's email address is undefined");
-      }
-    } catch (err) {
-      console.error('Database query error:', err);
-      throw new Error('Database query error');
-    }
-  }
-
-  const IsUserSubscribe = async () => {
+  const isUserSubscribed = async () => {
     const email = user?.primaryEmailAddress?.emailAddress;
     if (!email) {
       console.error('User email address is not available');
@@ -99,7 +83,38 @@ const UsageTrack: React.FC = () => {
     }
   };
 
-  const GetTotalUsage = (result: { aiResponse?: string | null }[]) => {
+  const getData = async () => {
+    const userName = user?.username; // Assuming you have the userName from the user object
+    if (!userName) {
+      console.error("User's username is undefined");
+      throw new Error("User's username is undefined");
+    }
+
+    try {
+      // First, retrieve the user's email address from the UserSubscription table
+      const subscriptionResult = await db.select().from(UserSubscription).where(eq(UserSubscription.userName, userName));
+
+      if (subscriptionResult.length === 0) {
+        console.error("User not found in UserSubscription table");
+        throw new Error("User not found in UserSubscription table");
+      }
+
+      const email = subscriptionResult[0].email;
+      if (email) {
+        // Now perform the query on the AIOutput table using the email
+        const result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, email));
+        getTotalUsage(result);
+      } else {
+        console.error("User's email address is undefined");
+        throw new Error("User's email address is undefined");
+      }
+    } catch (err) {
+      console.error('Database query error:', err);
+      throw new Error('Database query error');
+    }
+  };
+
+  const getTotalUsage = (result: { aiResponse?: string | null }[]) => {
     let total: number = 0;
     result.forEach((element) => {
       total += Number(element.aiResponse?.length || 0);
