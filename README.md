@@ -70,12 +70,12 @@ Set up environment variables:
    ```bash
       cp .env.example .env.local
    ```
-      # Edit .env.local and add necessary configuration
+ Edit .env.local and add necessary configuration
 3. **Project Structure**
 
 The project structure follows a standard Next.js application structure:
 
-
+```
 / 
 ├── components/         # React components
 ├── pages/              # Next.js pages
@@ -84,7 +84,8 @@ The project structure follows a standard Next.js application structure:
 ├── api/                # API routes
 ├── lib/                # Utility functions
 └── README.md           # Project README
-Usage
+```
+
 
 To start the development server:
 
