@@ -1,72 +1,61 @@
-<!-- Header Section -->
-<h1 align="center"><font face="Arial">Hi 👋, I'm Chiranjiv D Adsul </font></h1>
-<h3 align="center"><font face="Arial"><a href="https://chiranjivadsul.me/" target="_blank" rel="noreferrer">Chiranjiv</a> 🌟 Welcome to my GitHub profile! I'm a passionate Web Developer with good hands-on practice based in Mumbai, India. Feel free to reach out to me for any freelance projects or just to connect!</font></h3>
+# AI Content Generator
 
----
+This project is an AI-powered content generator built using React Next.js 14, integrating various technologies for modern web development.
 
-## About Me
-- 📍 Mumbai, India
-- 💻 Currently working with technologies based on Javascript including ReactJS, NodeJS, NextJS, MongoDB, Tailwind CSS, and TypeScript.
-- ⚙️ Skilled in Frontend, Backend, and various aspects of web development.
-- 👨‍💻 Love building user-friendly and interactive applications.
+## Table of Contents
 
----
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Getting Started](#getting-started)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Configuration](#configuration)
+5. [Project Structure](#project-structure)
+6. [Usage](#usage)
+   - [Authentication](#authentication)
+   - [Database](#database)
+   - [AI Integration](#ai-integration)
+7. [Deployment](#deployment)
+8. [Contributing](#contributing)
+9. [License](#license)
 
-## Get in Touch
-- Connect with me on [LinkedIn](https://www.linkedin.com/in/chiranjivdadsul/)
-- Email me at **adsulchiranjiv958@gmail.com** for work inquiries or just to say hello 🎭 
+## Introduction
 
----
+This project is an AI Content Generator built with React Next.js 14, designed to generate and manage content efficiently using AI capabilities.
 
-### Programming Language Stack
-<p align="left"> 
-  <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="C" width="40" height="40"/> </a>
-  <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++" width="40" height="40"/> </a>
-  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/> </a>
-  <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40"/> </a>
-  <a href="https://www.php.net" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="PHP" width="40" height="40"/> </a>
-</p>
+## Features
 
-### Dev Stack
-<p align="left">
-  <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5" width="40" height="40"/> </a>
-  <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3" width="40" height="40"/> </a>
-  <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Tailwind CSS" width="40" height="40"/> </a>
-  <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="React.js" width="40" height="40"/> </a>
-  <a href="https://redux.js.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="Redux" width="40" height="40"/> </a>
-  <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="Node.js" width="40" height="40"/> </a>
-  <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="Express.js" width="40" height="40"/> </a>
-  <a href="https://nextjs.org/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="Next.js" width="40" height="40"/> </a>
-</p>
+- **Modern UI**: Utilizes Tailwind CSS for responsive and sleek UI components.
+- **Authentication**: Implements social and email/password authentication with Clerk.
+- **Database**: Uses Drizzle ORM with PostgreSQL for efficient database management.
+- **AI Integration**: Integrates Google Gemini API for AI-driven content generation.
+- **Templates**: Provides customizable templates for generating AI-driven content.
+- **Deployment**: Easily deployable on Cloud platforms like Vercel.
 
-### Database Stack
-<p align="left">
-  <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" width="40" height="40"/> </a>
-  <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB" width="40" height="40"/> </a>
-  <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="PostgreSQL" width="40" height="40"/> </a>
-</p>
+## Technologies Used
 
-### Other Tools
-<p align="left">
-  <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git" width="40" height="40"/> </a>
-  <a href="https://www.postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman" width="40" height="40"/> </a>
-</p>
+- React Next.js 14
+- Tailwind CSS
+- TypeScript
+- Clerk for authentication
+- Drizzle ORM with PostgreSQL
+- Google Gemini API
 
----
+## Getting Started
 
-### Project Structure
-- **`/components`**: Contains React components used throughout the application.
-- **`/pages`**: Contains Next.js pages that represent different routes.
-- **`/public`**: Static assets such as images and fonts.
-- **`/styles`**: Global styles and Tailwind CSS configuration.
-- **`/utils`**: Utility functions and helper scripts.
-- **`/models`**: Data models and schemas (if applicable).
-- **`/services`**: Backend services and API integrations.
+To get a local copy up and running follow these simple steps.
 
----
+### Prerequisites
 
-### Getting Started
+- Node.js
+- npm or yarn
+- PostgreSQL
+
+### Installation
+
 1. **Clone the repository:**
+
    ```bash
-   git clone https://github.com/your-username/your-repository.git
-   cd your-repository
+   git clone https://github.com/your-username/ai-content-generator.git
+   cd ai-content-generator
