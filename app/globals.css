@@ -82,4 +82,10 @@
   transform: rotate(-8deg);
   /* background: #5DA2D5; */
 }
+
+
+.Toastify__toast-body img {
+  max-width: 100px; /* Adjust the width as needed */
+  max-height: 100px; /* Adjust the height as needed */
+}
   }

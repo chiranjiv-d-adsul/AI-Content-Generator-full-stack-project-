@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Scada } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
+import Footer from "@/components/Footer";
+
 const inter = Scada({
   subsets: ["latin"],
   weight: "400"
@@ -19,9 +22,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <html>
+        <body>
+
+
+      <div className={inter.className}>
+        <Header />
+        {children}
+        <Footer />
+      </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
