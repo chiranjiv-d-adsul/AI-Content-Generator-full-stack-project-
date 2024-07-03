@@ -14,7 +14,6 @@ import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { UpdateCreditUsageContext } from "@/app/(context)/UpdateCreditUsageContext";
 
-
 interface PROPS {
   params: {
     "template-slug": string;
@@ -22,20 +21,17 @@ interface PROPS {
 }
 
 function CreateNewContent(props: PROPS) {
-
-  const selectedTemplate:TEMPLATE|undefined=Templates?.find((item)=>item.slug === props.params["template-slug"]);
+  const selectedTemplate: TEMPLATE | undefined = Templates?.find((item) => item.slug === props.params["template-slug"]);
   const [loading, setLoading] = React.useState(false);
   const [aiOutput, setAiOutput] = React.useState<string>("");
-  const {user} = useUser();
-  const {updatCreditUsage,setUpdateCreditUsage}= useContext(UpdateCreditUsageContext)
-
+  const { user } = useUser();
+  const { updatCreditUsage, setUpdateCreditUsage } = useContext(UpdateCreditUsageContext);
 
   /**
    * Used to generate content from Ai
    * @param formData
    * @returns
    */
-
   const GenerateAIContent = async (formData: any) => {
     setLoading(true);
 
@@ -66,7 +62,6 @@ function CreateNewContent(props: PROPS) {
     }
   };
 
-
   const SaveInDb = async (formData: any, slug: string, aiResp: string) => {
     if (!user || !user.primaryEmailAddress || !user.primaryEmailAddress.emailAddress) {
       throw new Error('User email address is not available');
@@ -75,7 +70,7 @@ function CreateNewContent(props: PROPS) {
 
     try {
       const result = await db.insert(AIOutput).values({
-        formData: (formData), // Ensure formData is a string if it's an object
+        formData: JSON.stringify(formData), // Ensure formData is a string
         templateSlug: slug,
         aiResponse: aiResp,
         createdBy: email,
@@ -87,28 +82,27 @@ function CreateNewContent(props: PROPS) {
     }
   };
 
-
   return (
     <div className="p-5">
       <Link className="text-primary" href="/dashboard">
-      <Button> <ArrowLeft/> Back</Button>
+        <Button> <ArrowLeft /> Back</Button>
       </Link>
 
-    <div className="grid grid-cols-1  md:grid-cols-3 gap-5 p-5">
-      {/* FormSection */}
-      <div>
-        <FormSection  selectedTemplate={selectedTemplate}
-        userFormInput={(v:any) => GenerateAIContent(v)}
-        loading={loading}/>
+      <div className="grid grid-cols-1  md:grid-cols-3 gap-5 p-5">
+        {/* FormSection */}
+        <div>
+          <FormSection selectedTemplate={selectedTemplate}
+            userFormInput={(v: any) => GenerateAIContent(v)}
+            loading={loading} />
 
-      </div>
-      {/* Output Section */}
-      <div className="col-span-2">
-        <OutputSection  aiOutput={aiOutput}/>
+        </div>
+        {/* Output Section */}
+        <div className="col-span-2">
+          <OutputSection aiOutput={aiOutput} />
+        </div>
       </div>
     </div>
-    </div>
-  )
+  );
 }
 
 export default CreateNewContent;
