@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useContext } from "react";
 import FormSection from "../_components/FormSection";
 import OutputSection from "../_components/OutputSection";
@@ -8,7 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { chatSession } from "@/utils/AiModal";
-import { AIOutput } from "@/utils/schema";
+import { AIOutput } from "@/utils/schema"; // Ensure this import is correct
 import { db } from "@/utils/db";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
