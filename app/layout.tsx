@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Scada } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
-import Footer from "@/components/Footer";
 
 const inter = Scada({
   subsets: ["latin"],
@@ -27,9 +25,7 @@ export default function RootLayout({
 
 
       <div className={inter.className}>
-        <Header />
         {children}
-        <Footer />
       </div>
         </body>
       </html>

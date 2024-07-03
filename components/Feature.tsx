@@ -1,17 +1,15 @@
-import React from 'react'
+import React from 'react';
 
 const Feature = () => {
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto">
+    <section className="text-gray-600 body-font bg-gray-100">
+      <div className="container px-5 py-18 mx-auto">
         <div className="text-center mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">
-            Raw Denim Heirloom Man Braid
+            Powerful Features of Our AI Content Generator
           </h1>
-          <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500s">
-            Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-            taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi
-            pug.
+          <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500">
+            Discover the cutting-edge features that make our AI content generator your go-to tool for seamless content creation.
           </p>
           <div className="flex mt-6 justify-center">
             <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
@@ -34,14 +32,12 @@ const Feature = () => {
             </div>
             <div className="flex-grow">
               <h2 className="text-gray-900 text-lg title-font font-medium mb-3">
-                Shooting Stars
+                Fast & Efficient
               </h2>
               <p className="leading-relaxed text-base">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                Generate high-quality content in seconds with our advanced AI algorithms. Save time and effort while boosting productivity.
               </p>
-              <a className="mt-3 text-indigo-500 inline-flex items-center">
+              <a className="mt-3 text-indigo-500 inline-flex items-center" href="#">
                 Learn More
                 <svg
                   fill="none"
@@ -75,14 +71,12 @@ const Feature = () => {
             </div>
             <div className="flex-grow">
               <h2 className="text-gray-900 text-lg title-font font-medium mb-3">
-                The Catalyzer
+                Versatile Applications
               </h2>
               <p className="leading-relaxed text-base">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                Whether you need blog posts, social media content, or marketing copy, our AI content generator can handle it all with ease.
               </p>
-              <a className="mt-3 text-indigo-500 inline-flex items-center">
+              <a className="mt-3 text-indigo-500 inline-flex items-center" href="#">
                 Learn More
                 <svg
                   fill="none"
@@ -115,14 +109,12 @@ const Feature = () => {
             </div>
             <div className="flex-grow">
               <h2 className="text-gray-900 text-lg title-font font-medium mb-3">
-                Neptune
+                User-Friendly Interface
               </h2>
               <p className="leading-relaxed text-base">
-                Blue bottle crucifix vinyl post-ironic four dollar toast vegan
-                taxidermy. Gastropub indxgo juice poutine, ramps microdosing
-                banh mi pug VHS try-hard.
+                Enjoy a seamless user experience with our intuitive interface, designed to make content creation simple and enjoyable.
               </p>
-              <a className="mt-3 text-indigo-500 inline-flex items-center">
+              <a className="mt-3 text-indigo-500 inline-flex items-center" href="#">
                 Learn More
                 <svg
                   fill="none"
@@ -140,11 +132,11 @@ const Feature = () => {
           </div>
         </div>
         <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
-          Button
+          Get Started
         </button>
       </div>
     </section>
   );
 }
 
-export default Feature
+export default Feature;
