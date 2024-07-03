@@ -59,3 +59,51 @@ To get a local copy up and running follow these simple steps.
    ```bash
    git clone https://github.com/your-username/ai-content-generator.git
    cd ai-content-generator
+   
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+Configuration
+Set up environment variables:
+
+   ```bash
+      cp .env.example .env.local
+   ```
+      # Edit .env.local and add necessary configuration
+3. **Project Structure**
+
+The project structure follows a standard Next.js application structure:
+
+
+/ 
+├── components/         # React components
+├── pages/              # Next.js pages
+├── public/             # Static assets
+├── styles/             # Global styles
+├── api/                # API routes
+├── lib/                # Utility functions
+└── README.md           # Project README
+Usage
+
+To start the development server:
+
+```bash
+   npm run dev
+```
+Open http://localhost:3000 to view it in your browser.
+
+4.Authentication
+This project uses Clerk for authentication. Ensure you have configured Clerk properly in your environment variables.
+
+5.Database
+Drizzle ORM is used to interact with a PostgreSQL database. Set up your PostgreSQL database and configure the connection in .env.local.
+
+6.AI Integration
+Google Gemini API is used for AI-driven content generation. Obtain API credentials and configure them in .env.local.
+
+7.Deployment
+Deploy your application on Vercel or any cloud platform of your choice. Ensure environment variables are properly configured for production.
+
+8.Contributing
+Contributions are welcome! Please fork the repository and submit a pull request.
