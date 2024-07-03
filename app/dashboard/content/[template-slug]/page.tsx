@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useContext } from "react";
 import FormSection from "../_components/FormSection";
 import OutputSection from "../_components/OutputSection";
@@ -62,7 +62,7 @@ function CreateNewContent(props: PROPS) {
     }
   };
 
-  const SaveInDb = async (formData: any, slug: string, aiResp: string) => {
+  const SaveInDb = async (formData: string, slug: string, aiResp: string) => {
     if (!user || !user.primaryEmailAddress || !user.primaryEmailAddress.emailAddress) {
       throw new Error('User email address is not available');
     }
@@ -70,7 +70,7 @@ function CreateNewContent(props: PROPS) {
 
     try {
       const result = await db.insert(AIOutput).values({
-        formData: JSON.stringify(formData), // Ensure formData is a string
+        formData: formData, // Ensure formData is a string
         templateSlug: slug,
         aiResponse: aiResp,
         createdBy: email,
@@ -94,7 +94,6 @@ function CreateNewContent(props: PROPS) {
           <FormSection selectedTemplate={selectedTemplate}
             userFormInput={(v: any) => GenerateAIContent(v)}
             loading={loading} />
-
         </div>
         {/* Output Section */}
         <div className="col-span-2">

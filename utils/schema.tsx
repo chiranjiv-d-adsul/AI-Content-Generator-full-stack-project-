@@ -9,12 +9,11 @@ export const AIOutput = pgTable('ai_output', {
   createdAt: varchar('created_at').notNull(),
 });
 
-
-export const UserSubscription = pgTable('userSubscription', {
+export const UserSubscription = pgTable('user_subscription', {
   id: serial('id').primaryKey(),
   email: varchar('email').notNull(),
-  userName: varchar('userName'),
+  userName: varchar('user_name'),
   active: boolean('active'),
-  paymentId: varchar('paymentId'),
-  joinDate: varchar('joinDate')
+  paymentId: varchar('payment_id'),
+  joinDate: varchar('join_date')
 });
