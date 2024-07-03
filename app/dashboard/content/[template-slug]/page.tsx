@@ -75,7 +75,7 @@ function CreateNewContent(props: PROPS) {
 
     try {
       const result = await db.insert(AIOutput).values({
-        formData: JSON.stringify(formData), // Ensure formData is a string if it's an object
+        formData: (formData), // Ensure formData is a string if it's an object
         templateSlug: slug,
         aiResponse: aiResp,
         createdBy: email,
