@@ -130,7 +130,7 @@ const ContactForm = () => {
         </Form>
       </Formik>
 
-      <ToastContainer
+      {/* <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -143,7 +143,7 @@ const ContactForm = () => {
 
         theme="light"
         className="custom-toast-container"
-      />
+      /> */}
 
       {showConfetti && (
         <Confetti
